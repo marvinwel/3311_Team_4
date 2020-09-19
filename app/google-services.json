@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "7089417912",
+    "firebase_url": "https://project-f8408.firebaseio.com",
+    "project_id": "project-f8408",
+    "storage_bucket": "project-f8408.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7089417912:android:2baed375c56264ed2b8e4d",
+        "android_client_info": {
+          "package_name": "com.example.password_saver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7089417912-d9452802g87uc5912iq8c3cf5hj6ra5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqp4rtoGkPKHxAsf1dn13L56NXcds8WqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7089417912-d9452802g87uc5912iq8c3cf5hj6ra5u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
