@@ -43,7 +43,7 @@ public class LogIn extends AppCompatActivity {
         //set link for forgot password and signup
         textview = findViewById(R.id.ForgotPassword_link);
         textview1 = findViewById(R.id.signup_link);
-        String text = "forgot Passowrd?";
+        String text = "forgot Password?";
         String text1 = "Don't have an account? Sign up";
 
         Spannable ss = new SpannableString(text);

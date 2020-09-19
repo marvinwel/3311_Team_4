@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/pic3"
     android:layout_height="match_parent"
+    android:background="@drawable/pic7"
     tools:context=".LogIn">
 
     <TextView
         android:id="@+id/ForgotPassword_link"
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_height="25dp"
         android:layout_marginBottom="47dp"
         android:text="Forgot password?"
@@ -17,6 +17,7 @@
         android:textColorHighlight="#102950"
         android:textColorLink="#FFFFFF"
         android:textCursorDrawable="@color/colorPrimaryDark"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.886"
@@ -34,10 +35,10 @@
         android:hint="Username"
         android:inputType="textEmailAddress"
         android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
+        android:textColorHighlight="#15B9D1"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
-        android:textCursorDrawable="@color/colorPrimaryDark"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,9 +63,10 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
+        android:textColorHighlight="#15B9D1"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,18 +75,18 @@
 
     <TextView
         android:id="@+id/signup_link"
-        android:layout_width="237dp"
-        android:layout_height="39dp"
+        android:layout_width="294dp"
+        android:layout_height="51dp"
         android:text="Don't have an account? Sign up"
         android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textColorHint="#FFFFFF"
+        android:textColorHighlight="#102950"
         android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button"
-        app:layout_constraintVertical_bias="0.299" />
+        app:layout_constraintVertical_bias="0.29" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
