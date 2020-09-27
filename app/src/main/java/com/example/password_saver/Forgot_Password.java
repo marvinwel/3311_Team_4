@@ -92,7 +92,7 @@ public class Forgot_Password extends AppCompatActivity {
     {
         String emailinput = email.getText().toString();
 
-        if(!emailinput.isEmpty())
+        if(emailinput.isEmpty())
         {
             email.setError("Please Enter a valid Email address");
             email.requestFocus();
