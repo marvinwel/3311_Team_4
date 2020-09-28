@@ -22,63 +22,98 @@
         android:id="@+id/seekBar"
         android:layout_width="250dp"
         android:layout_height="38dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/Gen_button"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/gen_pss_display"
-        android:layout_width="241dp"
-        android:layout_height="96dp"
-        android:text="here"
+        android:layout_width="305dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="15dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/num_display"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.723"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logout_button"
-        app:layout_constraintVertical_bias="0.585" />
+        app:layout_constraintVertical_bias="0.738" />
 
     <Button
         android:id="@+id/Gen_button"
         android:layout_width="110dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="304dp"
+        android:layout_marginBottom="280dp"
+        android:background="@drawable/forgot_button"
         android:text="Generate"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/num_display"
         android:layout_width="92dp"
         android:layout_height="26dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="105dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="PASSWORD:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/logout_button"
-        app:layout_constraintHorizontal_bias="0.005"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.149" />
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="230dp"
+        android:layout_height="18dp"
+        android:text="Include Uppercase Characters"
+        android:textColorHighlight="#19407E"
+        android:textColorLink="#19407E"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="230dp"
+        android:layout_height="18dp"
+        android:text="Include Lowercase Characters"
+        android:textColorHighlight="#19407E"
+        android:textColorLink="#19407E"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="230dp"
+        android:layout_height="18dp"
+        android:text="Include Numbers"
+        android:textColorHighlight="#19407E"
+        android:textColorLink="#19407E"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="230dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="44dp"
+        android:text="Include Symbols"
+        android:textColorHighlight="#19407E"
+        android:textColorLink="#19407E"
+        app:layout_constraintBottom_toTopOf="@+id/Gen_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
