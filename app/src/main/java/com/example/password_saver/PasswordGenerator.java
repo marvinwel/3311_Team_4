@@ -20,6 +20,7 @@ public class PasswordGenerator {
         String lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
         String numberChars = "0123456789";
         String specialChars = "!@#$%^&*()_-+=<>?/{}~|";
+        String specChar = "";
         String allowedChars = "";
 
         Random rn = new Random();

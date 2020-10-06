@@ -1,22 +1,18 @@
 package com.example.password_saver;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapRegionDecoder;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -82,6 +78,9 @@ public class Register extends AppCompatActivity {
                             {
                                 Toast.makeText(Register.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Register.this, LogIn.class);
+                                intent.putExtra("USER_NAME",email_con.getText().toString());
+                                intent.putExtra("PASSWORD",password_con.getText().toString());
+                                intent.putExtra("value",true);
                                 startActivity(intent);
                             }
                         }

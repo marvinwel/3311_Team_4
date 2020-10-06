@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.password_saver">
 
-    
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Forgot_Password"></activity>
+        <activity android:name=".Store_Password"></activity>
+        <activity android:name=".Forgot_Password" />
         <activity android:name=".Register" />
         <activity android:name=".home" />
         <activity android:name=".LogIn">

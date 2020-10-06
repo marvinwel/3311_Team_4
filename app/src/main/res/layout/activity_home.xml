@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home">
@@ -71,7 +72,7 @@
         android:id="@+id/checkBox1"
         android:layout_width="230dp"
         android:layout_height="18dp"
-        android:text="Include Uppercase Characters"
+        android:text="Uppercase Characters"
         android:textColorHighlight="#19407E"
         android:textColorLink="#19407E"
         app:layout_constraintBottom_toTopOf="@+id/checkBox2"
@@ -83,7 +84,7 @@
         android:id="@+id/checkBox2"
         android:layout_width="230dp"
         android:layout_height="18dp"
-        android:text="Include Lowercase Characters"
+        android:text="Lowercase Characters"
         android:textColorHighlight="#19407E"
         android:textColorLink="#19407E"
         app:layout_constraintBottom_toTopOf="@+id/checkBox3"
@@ -95,7 +96,7 @@
         android:id="@+id/checkBox3"
         android:layout_width="230dp"
         android:layout_height="18dp"
-        android:text="Include Numbers"
+        android:text="Numbers"
         android:textColorHighlight="#19407E"
         android:textColorLink="#19407E"
         app:layout_constraintBottom_toTopOf="@+id/checkBox4"
@@ -108,12 +109,35 @@
         android:layout_width="230dp"
         android:layout_height="18dp"
         android:layout_marginBottom="44dp"
-        android:text="Include Symbols"
+        android:text="Symbols"
         android:textColorHighlight="#19407E"
         android:textColorLink="#19407E"
         app:layout_constraintBottom_toTopOf="@+id/Gen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/view_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="52dp"
+        android:text="view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Gen_button"
+        app:layout_constraintVertical_bias="0.016" />
+
+    <Button
+        android:id="@+id/save_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:text="Save Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_bttn"
+        app:layout_constraintTop_toBottomOf="@+id/Gen_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
