@@ -22,7 +22,7 @@ public class home extends AppCompatActivity {
     TextView passwor_display, num_display;
     SeekBar seekBar;
     Button gen_bttn;
-    CheckBox check1, check2, check3, check4;
+    CheckBox check1, check2, check3, check4,check5, check6, check7, check8,check9, check10, check11, check12,check13, check14;
     View overlay;
 
     @Override
@@ -42,6 +42,16 @@ public class home extends AppCompatActivity {
         check2 = findViewById(R.id.checkBox2);
         check3 = findViewById(R.id.checkBox3);
         check4 = findViewById(R.id.checkBox4);
+        check5 = findViewById(R.id.checkBox5);
+        check6 = findViewById(R.id.checkBox6);
+        check7 = findViewById(R.id.checkBox7);
+        check8 = findViewById(R.id.checkBox8);
+        check9 = findViewById(R.id.checkBox9);
+        check10 = findViewById(R.id.checkBox10);
+        check11 = findViewById(R.id.checkBox11);
+        check12 = findViewById(R.id.checkBox12);
+        check13 = findViewById(R.id.checkBox13);
+        check14 = findViewById(R.id.checkBox14);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -102,47 +112,43 @@ public class home extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
+
+                String character, UpperCase, lowercase, NumCharacters, AllSymbols ;
+
+
                 int length;
 
-                boolean chck_bttn1 = false;
-                boolean chck_bttn2 = false;
-                boolean chck_bttn3 = false;
-                boolean chck_bttn4 = false;
+                boolean chck_bttn1 = Check_bttn1();
+                boolean chck_bttn2 = Check_bttn2();
+                boolean chck_bttn3 = Check_bttn3();
+                boolean chck_bttn4 = Check_bttn4();
+                boolean specialChar = Check_bttn();
 
-                if(check1.isChecked())
-                {
-                    chck_bttn1 = true;
-                }
-                if(check2.isChecked())
-                {
-                    chck_bttn2 = true;
-                }
-                if(check3.isChecked())
-                {
-                    chck_bttn3 = true;
-                }
-                if(check4.isChecked())
-                {
-                    chck_bttn4 = true;
-                }
-                
 
 
                 length = CheckSeekBarLength();
-                if((chck_bttn1 == false && chck_bttn2 == false && chck_bttn3 == false && chck_bttn4 == false) )
+
+
+                if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
+                        && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked())
                 {
+                    //if nothing is checked display error message
                     passwor_display.setText("");
                     Toast.makeText(home.this, "Please check an option ", Toast.LENGTH_SHORT).show();
 
                 }
                 if(length < 1)
                 {
+                    //if seek bar is 0 display error message
                     passwor_display.setText("");
                     Toast.makeText(home.this, "Character length should be greater than 0 ", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    String password = PasswordGenerator.process(length,chck_bttn1,chck_bttn2,chck_bttn3,chck_bttn4);
+
+                    character = CheckCharacter(); //checks to see which unique character is picked
+
+                    String password = PasswordGenerator.process(length,character, chck_bttn1, chck_bttn2, chck_bttn3, chck_bttn4, specialChar);
                     passwor_display.setText(password);
                 }
 
@@ -153,6 +159,180 @@ public class home extends AppCompatActivity {
         });
 
     }
+
+    String CheckCharacter()
+    {
+        StringBuffer result = new StringBuffer();
+        String characters;
+
+        if(check5.isChecked())
+        {
+            result.append(check5.getText().toString());
+        }
+        if(check6.isChecked())
+        {
+            result.append(check6.getText().toString());
+        }
+        if(check7.isChecked())
+        {
+            result.append(check7.getText().toString());
+        }
+        if(check8.isChecked())
+        {
+            result.append(check8.getText().toString());
+        }
+        if(check9.isChecked())
+        {
+            result.append(check9.getText().toString());
+        }
+        if(check10.isChecked())
+        {
+            result.append(check10.getText().toString());
+        }
+        if(check11.isChecked())
+        {
+            result.append(check11.getText().toString());
+        }
+        if(check12.isChecked())
+        {
+            result.append(check12.getText().toString());
+        }
+        if(check13.isChecked())
+        {
+            result.append(check13.getText().toString());
+        }
+        if(check14.isChecked())
+        {
+            result.append(check14.getText().toString());
+        }
+
+        characters = result.toString();
+
+        return characters;
+    }
+
+    String CheckUppercase()
+    {
+
+        String characters;
+
+        if(check1.isChecked())
+        {
+            characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
+        }
+        else
+            characters = "";
+
+
+
+        return characters;
+    }
+
+
+    String Checklowercase()
+    {
+        String characters;
+
+        if(check2.isChecked())
+        {
+            characters = "abcdefghijklmnopqrstuvwxyz" ;
+        }
+        else
+            characters = "";
+
+
+        return characters;
+    }
+
+    String CheckNumCharacters()
+    {
+        String characters;
+
+        if(check3.isChecked())
+        {
+            characters = "0123456789" ;
+        }
+        else
+            characters = "";
+
+
+        return characters;
+    }
+
+    String CheckAllSymbols()
+    {
+        String characters;
+
+        if(check4.isChecked())
+        {
+            characters = "!@#$%^&*()_-+=<>?/{}~|" ;
+        }
+        else
+            characters = "";
+
+
+        return characters;
+    }
+
+    boolean Check_bttn1()
+    {
+        boolean chck_bttn = false;
+
+        if(check1.isChecked())
+        {
+            chck_bttn = true;
+        }
+
+        return chck_bttn;
+    }
+
+    boolean Check_bttn2()
+    {
+        boolean chck_bttn = false;
+
+        if(check2.isChecked())
+        {
+            chck_bttn = true;
+        }
+
+        return chck_bttn;
+    }
+    boolean Check_bttn3()
+    {
+        boolean chck_bttn = false;
+
+        if(check3.isChecked())
+        {
+            chck_bttn = true;
+        }
+
+        return chck_bttn;
+    }
+    boolean Check_bttn4()
+    {
+        boolean chck_bttn = false;
+
+        if(check4.isChecked())
+        {
+            chck_bttn = true;
+        }
+
+        return chck_bttn;
+    }
+    boolean Check_bttn()
+    {
+        boolean chck_bttn = false;
+
+        if(check5.isChecked() || check6.isChecked() || check7.isChecked() || check8.isChecked()
+        || check9.isChecked() || check10.isChecked() || check11.isChecked() || check12.isChecked()
+        || check13.isChecked() || check14.isChecked())
+        {
+            chck_bttn = true;
+        }
+
+        return chck_bttn;
+    }
+
 
     int CheckSeekBarLength()
     {
@@ -168,6 +348,9 @@ public class home extends AppCompatActivity {
 
         return length;
     }
+
+
+
 
     //thi function prevent user from going back to login in screen from home
     @Override

@@ -11,16 +11,16 @@ public class PasswordGenerator {
     private static  final int MIN_CODE = 65, MAX_CODE = 90;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static String process(int length,boolean upperCase, boolean lowerCase, boolean numbers, boolean specialCharacters)
+    public static String process(int length,String character, boolean upperCase, boolean lowerCase, boolean numbers, boolean Characters, boolean specialCharacters)
     {
 
 
 
         String upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String specialChars = character;
         String lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
         String numberChars = "0123456789";
-        String specialChars = "!@#$%^&*()_-+=<>?/{}~|";
-        String specChar = "";
+        String characters = "!@#$%^&*()_-+=<>?/{}~|";
         String allowedChars = "";
 
         Random rn = new Random();
@@ -45,11 +45,21 @@ public class PasswordGenerator {
             allowedChars += numberChars;
             builder.append(numberChars.charAt(rn.nextInt(numberChars.length()-1)));
         }
+        if(Characters  )
+        {
+            allowedChars += characters;
+            builder.append(characters.charAt(rn.nextInt(characters.length()-1)));
+        }
 
         if(specialCharacters  )
         {
             allowedChars += specialChars;
-            builder.append(specialChars.charAt(rn.nextInt(specialChars.length()-1)));
+            if(specialChars.length() < 2)
+            {
+                builder.append(specialChars.charAt(rn.nextInt(specialChars.length())));
+            }
+            else
+                builder.append(specialChars.charAt(rn.nextInt(specialChars.length()-1)));
         }
 
 

@@ -3,4 +3,14 @@
     <string name="title_activity_store__password">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="cb14">~</string>
+    <string name="cb13">-</string>
+    <string name="cb9">%</string>
+    <string name="cb1">Uppercase Characters</string>
+    <string name="cb5">!</string>
+    <string name="cb7">#</string>
+    <string name="cb8">$</string>
+    <string name="cb10"><![CDATA[&]]></string>
+    <string name="cb11">*</string>
+    <string name="cb12">_</string>
 </resources>
