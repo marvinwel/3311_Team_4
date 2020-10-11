@@ -21,10 +21,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
+        app:layout_constraintHorizontal_bias="0.554"
         app:layout_constraintStart_toEndOf="@+id/remember_box"
         app:layout_constraintTop_toBottomOf="@+id/psswrd_in"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.162" />
 
     <EditText
         android:id="@+id/usrname_in"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usrname_in"
-        app:layout_constraintVertical_bias="0.411" />
+        app:layout_constraintVertical_bias="0.582" />
 
     <EditText
         android:id="@+id/psswrd_in"
@@ -139,8 +139,8 @@
         android:id="@+id/remember_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="47dp"
         android:text="Remember me"
@@ -150,6 +150,18 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/psswrd_in" />
+        app:layout_constraintTop_toBottomOf="@+id/psswrd_in"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/fingerprint_icon"
+        android:layout_width="115dp"
+        android:layout_height="99dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.664"
+        app:srcCompat="@drawable/finger_foreground1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
