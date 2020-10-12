@@ -1,6 +1,5 @@
 package com.example.password_saver;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
@@ -8,12 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.provider.Settings;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.text.Spannable;
@@ -35,7 +31,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,12 +58,12 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-public class LogIn extends AppCompatActivity {
+public class LogIn<choice> extends AppCompatActivity {
 
 
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    //private FirebaseAuth.AuthStateListener mAuthStateListener;
     TextView textview, textview1;
     EditText email_in, password_in;
     Button login_bttn;
@@ -77,12 +72,12 @@ public class LogIn extends AppCompatActivity {
     private CheckBox checkBoxRemember;
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "PrefsFile";
+    private static final String SETTINGS = "settings";
     FingerprintManager fingerprintManager;
     KeyguardManager keyguardmanager;
     int choice = 5;
 
-    //fingerprint check if password is null
-    String temp_passwrd = null;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -95,7 +90,9 @@ public class LogIn extends AppCompatActivity {
         //firebase
         mAuth = FirebaseAuth.getInstance();
 
+        //user name password
         mPrefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        mPrefs = getSharedPreferences(SETTINGS,MODE_PRIVATE);
 
         //connect objects to widgets
         login_bttn = findViewById(R.id.login_button);
@@ -170,6 +167,16 @@ public class LogIn extends AppCompatActivity {
         textview1.setMovementMethod(LinkMovementMethod.getInstance());
 
 
+
+
+
+
+
+
+
+
+
+
         //execute after fingerprint prompt
         Executor executor = Executors.newSingleThreadExecutor();
 
@@ -185,14 +192,30 @@ public class LogIn extends AppCompatActivity {
             }
 
             @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result)
+            {
                 super.onAuthenticationSucceeded(result);
                 //TODO: Called when a biometric is recognized.
-                LoginWithFingerprint();
 
+                //set password to password txt and sign in
+                String email = email_in.getText().toString();
+                password_in.setText(getpassword());
+                mAuth.signInWithEmailAndPassword(email, getpassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
 
-
-
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(LogIn.this, home.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            Toast.makeText(LogIn.this, "Logged in", Toast.LENGTH_SHORT).show();
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        }
+                    }
+                });
 
             }
 
@@ -213,119 +236,26 @@ public class LogIn extends AppCompatActivity {
 
 
         fingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
-
         keyguardmanager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
 
+
+
+
         //if fingerprint is clicked
-        findViewById(R.id.fingerprint_icon).setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.P)
+        findViewById(R.id.fingerprint_icon).setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 biometricPrompt.authenticate(promptInfo);
-
-
-                //userlogin();
-
             }
         });
-
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void startFingerPrint() {
-        if (checkFingerPrintSettings()) {
-
-            FingerprintAuthenticator authenticator = FingerprintAuthenticator.getInstance();
-            if (authenticator.cipherInit()) {
-                FingerprintManager.CryptoObject cryptoObj = new FingerprintManager.CryptoObject(authenticator.getCipher());
-
-                FingerprintHanddler fingerprintHanddler = new FingerprintHanddler();
-                fingerprintHanddler.startAuthenication(cryptoObj);
-
-            }
 
 
-        }
-    }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private class FingerprintHanddler extends FingerprintManager.AuthenticationCallback {
-
-        CancellationSignal signal;
-
-        @Override
-        public void onAuthenticationError(int errorCode, CharSequence errString) {
-            super.onAuthenticationError(errorCode, errString);
-            Toast.makeText(LogIn.this, "Authentication Error", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
-            super.onAuthenticationHelp(helpCode, helpString);
-            Toast.makeText(LogIn.this, "Authentication Help!!", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onAuthenticationFailed() {
-            super.onAuthenticationFailed();
-            Toast.makeText(LogIn.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-            super.onAuthenticationSucceeded(result);
-
-            if (temp_passwrd == null) {
-                Toast.makeText(LogIn.this, "Please log in and enable Sign in with fingerprint", Toast.LENGTH_LONG).show();
-                return;
-
-            } else
-                Toast.makeText(LogIn.this, "Fingerprint Authentication Success", Toast.LENGTH_SHORT).show();
-
-        }
-
-
-        void startAuthenication(FingerprintManager.CryptoObject cryptoObj) {
-            signal = new CancellationSignal();
-
-            if (ActivityCompat.checkSelfPermission(LogIn.this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-
-            fingerprintManager.authenticate(cryptoObj, signal, 0, this, null);
-
-
-        }
-
-        void cancelFingerprint() {
-            signal.cancel();
-
-        }
-
-    }
-
-
-    private boolean checkFingerPrintSettings() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-            return false;
-
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (fingerprintManager.isHardwareDetected()) {
-                if (fingerprintManager.hasEnrolledFingerprints()) {
-                    if (keyguardmanager.isKeyguardSecure())
-                        return true;
-                } else {
-                    Toast.makeText(this, "Enroll Fingerprint!!", Toast.LENGTH_SHORT).show();
-                    startActivity((new Intent(Settings.ACTION_SECURITY_SETTINGS)));
-                }
-
-            }
-        }
-        return true;
-    }
 
 
     private void getPreferencesData() {
@@ -379,7 +309,7 @@ public class LogIn extends AppCompatActivity {
                         }
 
                         if (choice == 3) {
-                            Toast.makeText(LogIn.this, "Logged In", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogIn.this, "Logged in", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         }
@@ -428,10 +358,16 @@ public class LogIn extends AppCompatActivity {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(LogIn.this, "Logged In and fingerprint Enabled!", Toast.LENGTH_LONG).show();
+                       Toast.makeText(LogIn.this, "Fingeerprint enabled", Toast.LENGTH_LONG).show();
+
+
+
+
                         storepassword();
                         startActivity(intent);
+
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
                     }
                 });
@@ -462,7 +398,6 @@ public class LogIn extends AppCompatActivity {
             Utils.saveStringInSp(this, "password",encryptedPassword);
             Utils.saveStringInSp(this, "encryptionIV",Base64.encodeToString(encryptionIV,Base64.DEFAULT));
 
-            Toast.makeText(this, "password saved", Toast.LENGTH_SHORT).show();
 
 
 
@@ -503,11 +438,11 @@ public class LogIn extends AppCompatActivity {
 
 
 
-    public void LoginWithFingerprint()
+    public String getpassword()
     {
         try{
             String base64EncryptedPassword = Utils.getStringFromSp(this,"password");
-            String base64EncryptionIv = Utils.getStringFromSp(this, "encryptionIv");
+            String base64EncryptionIv = Utils.getStringFromSp(this, "encryptionIV");
 
             byte[] encryptionIv = Base64.decode(base64EncryptionIv, Base64.DEFAULT);
             byte [] encryptedPassword = Base64.decode(base64EncryptedPassword, Base64.DEFAULT);
@@ -519,11 +454,15 @@ public class LogIn extends AppCompatActivity {
 
             cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(encryptionIv));
             byte [] passwordBytes = cipher.doFinal(encryptedPassword);
-            String password = new String(passwordBytes, "UTF-8");
+            String password1 = new String(passwordBytes, "UTF-8");
 
-            password_in.setText(password);
-            //userlogin();
-            //userLogin();
+            return password1;
+
+
+
+
+
+
 
         }catch(NoSuchAlgorithmException |NoSuchPaddingException | IllegalBlockSizeException | InvalidKeyException | BadPaddingException
                 | InvalidAlgorithmParameterException | KeyStoreException | CertificateException | IOException | UnrecoverableKeyException e)
@@ -532,44 +471,6 @@ public class LogIn extends AppCompatActivity {
         }
 
     }
-
-
-
-    public void userlogin()
-    {
-
-        String email = email_in.getText().toString();
-        String password = password_in.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-
-                if (!task.isSuccessful()) {
-                    Toast.makeText(LogIn.this, "Login Error, Please check Password or Email", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (checkBoxRemember.isChecked()) {
-                        Boolean boolIsChecked = checkBoxRemember.isChecked();
-                        SharedPreferences.Editor editor = mPrefs.edit();
-                        editor.putString("pref_name", email_in.getText().toString());
-                        editor.putBoolean("pref_check", boolIsChecked);
-                        editor.apply();
-                    } else {
-                        mPrefs.edit().clear().apply();
-                    }
-
-                    Intent intent = new Intent(LogIn.this, home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                }
-
-            }
-        });
-    }
-
 
 
 

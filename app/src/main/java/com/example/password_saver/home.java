@@ -100,7 +100,7 @@ public class home extends AppCompatActivity {
                 {
                     Intent intent = new Intent(home.this , Store_Password.class);
                     intent.putExtra("Gen_PassWord",passwor_display.getText().toString());
-                    Toast.makeText(home.this, "Password Saved!!", Toast.LENGTH_SHORT).show();
+
                     startActivity(intent);
                 }
 
