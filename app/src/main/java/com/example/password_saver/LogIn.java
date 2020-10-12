@@ -279,7 +279,12 @@ public class LogIn<choice> extends AppCompatActivity {
                     mPrefs.edit().clear().apply();
                     mPrefs.getBoolean("pref_check", false);
                 }
-
+                if(email_in.getText().toString().equalsIgnoreCase("") == true)
+                {
+                    email_in.setError("Please Enter Email");
+                    email_in.requestFocus();
+                    return;
+                }
                 if( email.equalsIgnoreCase(email_in.getText().toString())  == true)
                 {
                     biometricPrompt.authenticate(promptInfo);
