@@ -273,6 +273,12 @@ public class LogIn<choice> extends AppCompatActivity {
                 //if previous email and email in txt dont match no finger print
                 // editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                 String email = mPrefs.getString("pref_name","");
+                if(!checkBoxRemember.isChecked())
+                {
+                    editor = mPrefs.edit();
+                    mPrefs.edit().clear().apply();
+                    mPrefs.getBoolean("pref_check", false);
+                }
 
                 if( email.equalsIgnoreCase(email_in.getText().toString())  == true)
                 {
