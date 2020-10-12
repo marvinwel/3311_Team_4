@@ -184,23 +184,6 @@ public class LogIn<choice> extends AppCompatActivity {
         textview1.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-/*
-
-        //SharedPreferences editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String email = mPrefs.getString("pref_name","").toString();
-
-
-        if( email.equalsIgnoreCase(email_in.getText().toString())  == false)
-        {
-
-
-            mPrefs.edit().clear().apply();
-            editor.putString("pref_name", email_in.getText().toString());
-            editor.commit();
-
-        }
-
- */
 
 
 
@@ -209,7 +192,8 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
 
-        //execute after fingerprint prompt
+
+        //execute after fingerprint prompt is pressed
         Executor executor = Executors.newSingleThreadExecutor();
 
         final BiometricPrompt biometricPrompt = new BiometricPrompt(LogIn.this, executor, new BiometricPrompt.AuthenticationCallback() {
@@ -259,6 +243,11 @@ public class LogIn<choice> extends AppCompatActivity {
         });
 
 
+
+
+
+
+
         //build biometric fingerprint prompt
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
@@ -291,7 +280,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
                 }
                 else
-                    Toast.makeText(LogIn.this, mPrefs.getString("pref_name","").toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogIn.this, "Please Sign in with password", Toast.LENGTH_SHORT).show();
 
 
             }
