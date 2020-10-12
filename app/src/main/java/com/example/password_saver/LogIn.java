@@ -70,7 +70,10 @@ public class LogIn<choice> extends AppCompatActivity {
     View overlay;
     ImageView FingerPrint;
     private CheckBox checkBoxRemember;
-    private SharedPreferences mPrefs;
+    public SharedPreferences mPrefs;
+
+    public SharedPreferences.Editor editor;
+
     private static final String PREFS_NAME = "PrefsFile";
     private static final String SETTINGS = "settings";
     FingerprintManager fingerprintManager;
@@ -80,11 +83,13 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
 
         //firebase
@@ -115,7 +120,10 @@ public class LogIn<choice> extends AppCompatActivity {
         overlay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         //display username and password on login page
-        if (value == true) {
+        if (value)
+        {
+            editor = mPrefs.edit();
+
             mPrefs.edit().clear().apply();
             email_in.setText(signup_usrname);
             password_in.setText(signup_pass);
@@ -124,13 +132,22 @@ public class LogIn<choice> extends AppCompatActivity {
             getPreferencesData();
 
 
+
+
         //what happens when log in button is pressed
         login_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                editor = mPrefs.edit();
+                mPrefs.edit().clear().apply();
+                editor.putString("pref_name", email_in.getText().toString());
+                editor.apply();
                 userLogin();
             }
         });
+
+
 
 
         //set link for forgot password and signup
@@ -167,8 +184,23 @@ public class LogIn<choice> extends AppCompatActivity {
         textview1.setMovementMethod(LinkMovementMethod.getInstance());
 
 
+/*
+
+        //SharedPreferences editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String email = mPrefs.getString("pref_name","").toString();
 
 
+        if( email.equalsIgnoreCase(email_in.getText().toString())  == false)
+        {
+
+
+            mPrefs.edit().clear().apply();
+            editor.putString("pref_name", email_in.getText().toString());
+            editor.commit();
+
+        }
+
+ */
 
 
 
@@ -184,7 +216,7 @@ public class LogIn<choice> extends AppCompatActivity {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                if(errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     // user clicked negative button
                 } else {
                     //TODO: Called when an unrecoverable error has been encountered and the operation is complete.
@@ -241,13 +273,27 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
 
+
         //if fingerprint is clicked
         findViewById(R.id.fingerprint_icon).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                biometricPrompt.authenticate(promptInfo);
+
+                //if previous email and email in txt dont match no finger print
+                // editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                String email = mPrefs.getString("pref_name","");
+
+                if( email.equalsIgnoreCase(email_in.getText().toString())  == true)
+                {
+                    biometricPrompt.authenticate(promptInfo);
+
+                }
+                else
+                    Toast.makeText(LogIn.this, mPrefs.getString("pref_name","").toString(), Toast.LENGTH_SHORT).show();
+
+
             }
         });
     }
@@ -262,12 +308,18 @@ public class LogIn<choice> extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
 
+
         if (sp.contains("pref_name")) {
-            String u = sp.getString("pref_name", "not found");
-            email_in.setText(u.toString());
+            //SharedPreferences editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            String email = mPrefs.getString("pref_name","");
+            email_in.setText(email);
+
+
+            //String u = sp.getString("pref_name", "not found");
+            //email_in.setText(u.toString());
         }
         if (sp.contains("pref_check")) {
-            Boolean b = sp.getBoolean("pref_check", false);
+            Boolean b = mPrefs.getBoolean("pref_check", false);
             checkBoxRemember.setChecked(b);
         }
     }
@@ -289,9 +341,11 @@ public class LogIn<choice> extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(LogIn.this, "Login Error, Please check Password or Email", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (checkBoxRemember.isChecked()) {
+                        if (checkBoxRemember.isChecked())
+                        {
+                            editor = mPrefs.edit();
                             Boolean boolIsChecked = checkBoxRemember.isChecked();
-                            SharedPreferences.Editor editor = mPrefs.edit();
+                            //SharedPreferences.Editor editor = mPrefs.edit();
                             editor.putString("pref_name", email_in.getText().toString());
                             editor.putBoolean("pref_check", boolIsChecked);
                             editor.apply();
