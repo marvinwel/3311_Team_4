@@ -273,18 +273,24 @@ public class LogIn<choice> extends AppCompatActivity {
                 //if previous email and email in txt dont match no finger print
                 // editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                 String email = mPrefs.getString("pref_name","");
-                if(!checkBoxRemember.isChecked())
+                //if remember me is checked keep it checked
+                if (checkBoxRemember.isChecked())
                 {
                     editor = mPrefs.edit();
-                    mPrefs.edit().clear().apply();
-                    mPrefs.getBoolean("pref_check", false);
+                    Boolean boolIsChecked = checkBoxRemember.isChecked();
+                    //SharedPreferences.Editor editor = mPrefs.edit();
+                    editor.putString("pref_name", email_in.getText().toString());
+                    editor.putBoolean("pref_check", boolIsChecked);
+                    editor.apply();
                 }
+                //if fingerprint icon is pressed and email field is blank
                 if(email_in.getText().toString().equalsIgnoreCase("") == true)
                 {
                     email_in.setError("Please Enter Email");
                     email_in.requestFocus();
                     return;
                 }
+                //do email text on screen match with previous, if yes allow biometric
                 if( email.equalsIgnoreCase(email_in.getText().toString())  == true)
                 {
                     biometricPrompt.authenticate(promptInfo);
@@ -303,28 +309,26 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
 
-
+    //display remembered email on screen
     private void getPreferencesData() {
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
 
 
-        if (sp.contains("pref_name")) {
-            //SharedPreferences editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (sp.contains("pref_name"))
+        {
             String email = mPrefs.getString("pref_name","");
             email_in.setText(email);
-
-
-            //String u = sp.getString("pref_name", "not found");
-            //email_in.setText(u.toString());
         }
-        if (sp.contains("pref_check")) {
+
+        if (sp.contains("pref_check"))
+        {
             Boolean b = mPrefs.getBoolean("pref_check", false);
             checkBoxRemember.setChecked(b);
         }
     }
 
-
+    //usr logged in with finger print
     private void userLogin() {
         String email = email_in.getText().toString();
         String password = password_in.getText().toString();
@@ -383,7 +387,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
     }
 
-
+    //after logged in with finger print screen will display to authenticate fingerprint
     public void opendialog(final Intent intent) {
 
 
@@ -431,7 +435,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
     }
 
-
+    //after user click yes on dialog to authenticate fingerprint password will be saved
     private  void storepassword() {
         try {
             String passwordString = password_in.getText().toString();
@@ -467,6 +471,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
     }
 
+    //key to help encrypt usr password
     @RequiresApi(api = Build.VERSION_CODES.M)
     private SecretKey createKey() throws InvalidAlgorithmParameterException {
         KeyGenerator keyGenerator = null;
@@ -492,6 +497,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
 
+    //decrypt usr password
     public String getpassword()
     {
         try{
@@ -511,11 +517,6 @@ public class LogIn<choice> extends AppCompatActivity {
             String password1 = new String(passwordBytes, "UTF-8");
 
             return password1;
-
-
-
-
-
 
 
         }catch(NoSuchAlgorithmException |NoSuchPaddingException | IllegalBlockSizeException | InvalidKeyException | BadPaddingException
