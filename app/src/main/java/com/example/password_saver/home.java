@@ -358,12 +358,15 @@ public class home extends AppCompatActivity {
     {
         Toast.makeText(this, "Cant go back", Toast.LENGTH_SHORT).show();
     }
+
+    //logout of app
      void UserLogout ()
     {
         mAuth.signOut();
         Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(),LogIn.class));
         finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 
