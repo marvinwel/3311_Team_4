@@ -213,13 +213,20 @@ public class LogIn<choice> extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 //TODO: Called when a biometric is recognized.
 
-                //set password to password txt and sign in
+                //set password to password field and sign in
                 String email = email_in.getText().toString();
                 password_in.setText(getpassword());
+                if (!checkBoxRemember.isChecked())
+                {
+                    mPrefs.edit().clear().apply();
+                }
+
                 mAuth.signInWithEmailAndPassword(email, getpassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
+                        if (!task.isSuccessful())
+                        {
+                            Toast.makeText(LogIn.this, "Error Logging in", Toast.LENGTH_SHORT).show();
 
                         }
                         else
@@ -256,6 +263,7 @@ public class LogIn<choice> extends AppCompatActivity {
                 .build();
 
 
+        //objects initialized
         fingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
         keyguardmanager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
 
@@ -290,7 +298,7 @@ public class LogIn<choice> extends AppCompatActivity {
                     email_in.requestFocus();
                     return;
                 }
-                //do email text on screen match with previous, if yes allow biometric
+                //do email text on screen match with previous, if yes allow biometric prompt
                 if( email.equalsIgnoreCase(email_in.getText().toString())  == true)
                 {
                     biometricPrompt.authenticate(promptInfo);
@@ -305,11 +313,27 @@ public class LogIn<choice> extends AppCompatActivity {
     }
 
 
+//from this line and up everything is automatically ran when login page is displayed
 
 
 
 
-    //display remembered email on screen
+
+
+
+
+
+
+
+
+
+
+//everything from from this point are calling functions.
+
+
+
+    //first if display remembered email on screen
+    //second if check if remember me box is checked
     private void getPreferencesData() {
         SharedPreferences sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
@@ -336,7 +360,8 @@ public class LogIn<choice> extends AppCompatActivity {
         int num1 = CheckIfEmailisEmpty(email);
         int num2 = CheckIfPasswordIsEmpty(password);
 
-        if (num1 + num2 == 2) {
+        if (num1 + num2 == 2)
+        {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -387,7 +412,7 @@ public class LogIn<choice> extends AppCompatActivity {
 
     }
 
-    //after logged in with finger print screen will display to authenticate fingerprint
+    //after logging in username and password, finger print dialog will display asking to authenticate fingerprint
     public void opendialog(final Intent intent) {
 
 
