@@ -2,6 +2,8 @@
 
 ##  Encrypted Password Saver/Password Generator App
 
+ 
+
 We choose to create a mobile application where users can generate a password and store multiple encrypted passwords in one secure location. The application will be featured on Android platform. 
 
 We target users who are tired of having to remember multiple passwords to multiple accounts, or easily getting locked out of their account for a few minutes, hours, or even possible days after entering in the wrong password. Even having to reset their password every time they log in to a different account because they easily mixed up one password with another?  Users that dislike having to create a new password that meet absurd requirement such as creating a minimum of sixteen characters password. We choose to solve this problem by creating an application where users can generate and store multiple passwords in one secure location.
