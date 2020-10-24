@@ -167,43 +167,43 @@ public class home extends AppCompatActivity {
 
         if(check5.isChecked())
         {
-            result.append(check5.getText().toString());
+            result.append(check5.getText().toString()+"!!!");
         }
         if(check6.isChecked())
         {
-            result.append(check6.getText().toString());
+            result.append(check6.getText().toString()+"@@@");
         }
         if(check7.isChecked())
         {
-            result.append(check7.getText().toString());
+            result.append(check7.getText().toString()+"###");
         }
         if(check8.isChecked())
         {
-            result.append(check8.getText().toString());
+            result.append(check8.getText().toString()+"$$$");
         }
         if(check9.isChecked())
         {
-            result.append(check9.getText().toString());
+            result.append(check9.getText().toString()+"%%%");
         }
         if(check10.isChecked())
         {
-            result.append(check10.getText().toString());
+            result.append(check10.getText().toString()+"&&&");
         }
         if(check11.isChecked())
         {
-            result.append(check11.getText().toString());
+            result.append(check11.getText().toString()+"***");
         }
         if(check12.isChecked())
         {
-            result.append(check12.getText().toString());
+            result.append(check12.getText().toString()+"___");
         }
         if(check13.isChecked())
         {
-            result.append(check13.getText().toString());
+            result.append(check13.getText().toString()+"---");
         }
         if(check14.isChecked())
         {
-            result.append(check14.getText().toString());
+            result.append(check14.getText().toString()+"~~~");
         }
 
         characters = result.toString();
