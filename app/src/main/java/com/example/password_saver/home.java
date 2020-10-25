@@ -1,11 +1,15 @@
 package com.example.password_saver;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,15 +19,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class home extends AppCompatActivity {
+public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     Button logout_bttn,save_bttn,view_bttn;
     FirebaseAuth mAuth;
     TextView passwor_display, num_display;
     SeekBar seekBar;
-    Button gen_bttn;
+    Button gen_bttn,copybttn;
     CheckBox check1, check2, check3, check4,check5, check6, check7, check8,check9, check10, check11, check12,check13, check14;
     View overlay;
+    ClipboardManager clipboardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class home extends AppCompatActivity {
         gen_bttn = findViewById(R.id.Gen_button);
         save_bttn = findViewById(R.id.save_bttn);
         view_bttn = findViewById(R.id.view_bttn);
+        copybttn = findViewById(R.id.cpybttn);
         check1 = findViewById(R.id.checkBox1);
         check2 = findViewById(R.id.checkBox2);
         check3 = findViewById(R.id.checkBox3);
@@ -56,6 +62,10 @@ public class home extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
+        //clipboard sevice
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+
         //full screen
         overlay = findViewById(R.id.home_page);
         overlay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -65,7 +75,8 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                UserLogout();
+                //UserLogout();
+                showPopup(view);
 
             }
         });
@@ -88,6 +99,7 @@ public class home extends AppCompatActivity {
             }
         });
 
+        //when save button is pressed
         save_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -108,6 +120,27 @@ public class home extends AppCompatActivity {
             }
         });
 
+
+        //when copy bttn is pressed
+        copybttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text = passwor_display.getText().toString();
+
+                if(!text.equals(""))
+                {
+                    ClipData clipData = ClipData.newPlainText("text",text);
+                    clipboardManager.setPrimaryClip(clipData);
+
+                    Toast.makeText(home.this, "Copied", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+
+        //when generate button is pressed
         gen_bttn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -129,6 +162,7 @@ public class home extends AppCompatActivity {
                 length = CheckSeekBarLength();
 
 
+                //error handling for seek bar
                 if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
                         && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked())
                 {
@@ -142,6 +176,13 @@ public class home extends AppCompatActivity {
                     //if seek bar is 0 display error message
                     passwor_display.setText("");
                     Toast.makeText(home.this, "Character length should be greater than 0 ", Toast.LENGTH_SHORT).show();
+                }
+                if(length > 0 && (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
+                        && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked()) )
+                {
+                    //if nothing is checked display error message
+                    passwor_display.setText("");
+                    Toast.makeText(home.this, "Please check an option ", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -369,5 +410,23 @@ public class home extends AppCompatActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+    public void showPopup(View v)
+    {
+        PopupMenu popupMenu = new PopupMenu(this,v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_logut);
+        popupMenu.show();
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch(menuItem.getItemId()){
+            case R.id.item1:
+                UserLogout();
+                return true;
+            default:
+                return false;
+        }
+    }
 }
