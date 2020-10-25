@@ -163,6 +163,7 @@ public class LogIn<choice> extends AppCompatActivity {
             public void onClick(@NonNull View view) {
                 Intent intent = new Intent(LogIn.this, Forgot_Password.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
             }
         };
 
@@ -172,6 +173,7 @@ public class LogIn<choice> extends AppCompatActivity {
             public void onClick(@NonNull View view) {
                 Intent intent = new Intent(LogIn.this, Register.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
             }
         };
 

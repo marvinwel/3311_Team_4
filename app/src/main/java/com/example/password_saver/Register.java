@@ -85,6 +85,7 @@ public class Register extends AppCompatActivity {
                                 intent.putExtra("PASSWORD",password_con.getText().toString());
                                 intent.putExtra("value",true);
                                 startActivity(intent);
+                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
                             }
                         }
                     });
@@ -99,6 +100,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Register.this, LogIn.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
