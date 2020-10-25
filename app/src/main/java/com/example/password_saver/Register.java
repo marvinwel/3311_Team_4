@@ -3,6 +3,7 @@ package com.example.password_saver;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
 
 
 public class Register extends AppCompatActivity {
@@ -63,9 +65,10 @@ public class Register extends AppCompatActivity {
                 int num1 = isEmailTheSame(email,email_confirm);
                 int num2 = isPasswordTheSame(password,password_confirm);
                 int num3 = checklengthOfPassword(password);
+                boolean validatedemail = validateEmail(email);
 
 
-                if(num+num1+num2+num3 == 4)
+                if((num+num1+num2+num3 == 4) && validatedemail)
                 {
                     mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -233,6 +236,20 @@ public class Register extends AppCompatActivity {
         }
         return 0;
     }
+
+    boolean  validateEmail(String email)
+    {
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            email_txt.setError("Please enter a valid email address");
+            return false;
+
+        }
+
+       return true;
+    }
+
+    public static final Pattern EMAIL_ADDRESS = Pattern.compile("[a-zA-A0-9]\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA_Z0-9][a-zA-Z0-9\\-]{0,25}]" + ")+");
 
     public void hideKeyboard(View view)
     {
