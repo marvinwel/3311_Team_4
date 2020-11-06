@@ -112,14 +112,24 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
                 {
                     Intent intent = new Intent(home.this , Store_Password.class);
                     intent.putExtra("Gen_PassWord",passwor_display.getText().toString());
-
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
 
 
             }
         });
 
+
+        //button clicked goes to store_Password page
+        view_bttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(home.this, Store_Password.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
 
         //when copy bttn is pressed
         copybttn.setOnClickListener(new View.OnClickListener() {
@@ -162,8 +172,15 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
                 length = CheckSeekBarLength();
 
 
+                //max characters
+                if(length == 999)
+                {
+                    //if seek bar is 0 display error message
+                    passwor_display.setText("");
+                    Toast.makeText(home.this, "Max Characters is 40", Toast.LENGTH_SHORT).show();
+                }
                 //error handling for seek bar
-                if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
+                else if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
                         && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked())
                 {
                     //if nothing is checked display error message
@@ -171,13 +188,14 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
                     Toast.makeText(home.this, "Please check an option ", Toast.LENGTH_SHORT).show();
 
                 }
-                if(length < 1)
+                else if(length < 1)
                 {
                     //if seek bar is 0 display error message
                     passwor_display.setText("");
                     Toast.makeText(home.this, "Character length should be greater than 0 ", Toast.LENGTH_SHORT).show();
                 }
-                if(length > 0 && (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
+
+                else if(length > 0 && (!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
                         && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked()) )
                 {
                     //if nothing is checked display error message
@@ -383,6 +401,10 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
         if(seekBar.getProgress() < 1)
         {
             length = 0;
+        }
+        if(seekBar.getProgress() > 40)
+        {
+            length = 999;
         }
         else
             length = seekBar.getProgress();
