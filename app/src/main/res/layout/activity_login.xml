@@ -5,6 +5,7 @@
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="hideKeyboard"
     android:background="@drawable/background_pic"
     tools:context=".LogIn">
 
@@ -109,31 +110,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
-    <View
-        android:id="@+id/fragment"
-        android:layout_width="396dp"
-        android:layout_height="261dp"
-        android:onClick="hideKeyboard"
-        app:layout_constraintBottom_toTopOf="@+id/usrname_in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="31dp"
-        android:layout_height="452dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="345dp"
-        android:layout_marginRight="345dp"
-        android:onClick="hideKeyboard"
-        app:layout_constraintEnd_toEndOf="@+id/login_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment" />
 
     <CheckBox
         android:id="@+id/remember_box"

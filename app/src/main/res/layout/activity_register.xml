@@ -5,20 +5,9 @@
     android:id="@+id/signup_layout"
     android:layout_width="match_parent"
     android:background="#ffffff"
+    android:onClick="hideKeyboard"
     android:layout_height="match_parent"
     tools:context=".Register">
-
-    <View
-        android:id="@+id/fragment2"
-        android:layout_width="414dp"
-        android:layout_height="204dp"
-        android:onClick="hideKeyboard"
-        app:layout_constraintBottom_toTopOf="@+id/email_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 
     <TextView
@@ -128,33 +117,5 @@
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/fragment4"
-        android:layout_width="66dp"
-        android:layout_height="431dp"
-        android:layout_marginTop="16dp"
-        android:onClick="hideKeyboard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/email_confirm"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment2"
-        app:layout_constraintVertical_bias="0.396" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="60dp"
-        android:layout_height="451dp"
-        android:layout_marginStart="346dp"
-        android:layout_marginLeft="346dp"
-        android:layout_marginTop="11dp"
-        android:onClick="hideKeyboard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fragment4"
-        app:layout_constraintTop_toBottomOf="@+id/fragment2"
-        app:layout_constraintVertical_bias="0.15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

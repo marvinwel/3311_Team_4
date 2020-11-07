@@ -1,6 +1,8 @@
 package com.example.password_saver;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -14,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -121,7 +122,8 @@ public class Store_Password extends AppCompatActivity {
 
                     SecretKey secretKey = null;
                     try {
-                        outputString = encrypt(usrname.getText().toString(),encrypt_pass);
+                        outputString = encrypt(encrypt_pass,usrname.getText().toString());
+                        
                     }catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -131,7 +133,11 @@ public class Store_Password extends AppCompatActivity {
 
                     //store password on database
                     mDatabse.push().setValue(store);
-                    //mDatabse.child("user").child("marvinwel").setValue(store);
+
+                    domain.setText("");
+                    usrname.setText("");
+                    passtext.setText("");
+
                 }
 
 
@@ -140,15 +146,55 @@ public class Store_Password extends AppCompatActivity {
             }
         });
 
+        //dialog pops up each time listview is clicked on
         lstview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0)
-                {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                    Toast.makeText(Store_Password.this, "hello", Toast.LENGTH_SHORT).show();
+                String decrypt_pass = null;
+                String[] key = null;
+                String[] temp;
 
+                //takes all words as a string
+                String word = adapterView.getItemAtPosition(position).toString();
+                temp = word.split("Username: ");
+                key = temp[1].split("\n");
+
+                
+                //split string to just get encrypted password password
+                String[] wordarray = word.split("password: ");
+
+                String tmp = key[0];
+
+                try {
+                    decrypt_pass = decrypt(wordarray[1],tmp);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                //show dialog box to show password
+                AlertDialog.Builder alert = new AlertDialog.Builder(Store_Password.this);
+                alert.setTitle("Info");
+
+
+
+
+                alert.setMessage("Password: "+decrypt_pass);
+
+                //alert.setMessage(tmp);
+                //alert.setMessage(tmp.length());
+
+
+                alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alert.create().show();
+
+                //Toast.makeText(Store_Password.this, position, Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -237,7 +283,7 @@ public class Store_Password extends AppCompatActivity {
     {
         SecretKeySpec key = generatekey(password);
         Cipher cipher = Cipher.getInstance(AES);
-        cipher.init(Cipher.ENCRYPT_MODE,key);
+        cipher.init(Cipher.DECRYPT_MODE,key);
         byte[] decodedValue = Base64.decode(outputString,Base64.DEFAULT);
         byte[] decValue = cipher.doFinal(decodedValue);
         String decryptedValue = new String(decValue);
