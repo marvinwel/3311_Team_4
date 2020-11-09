@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -63,6 +64,8 @@ public class LogIn<choice> extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
     //private FirebaseAuth.AuthStateListener mAuthStateListener;
     TextView textview, textview1;
     EditText email_in, password_in;
@@ -71,6 +74,7 @@ public class LogIn<choice> extends AppCompatActivity {
     ImageView FingerPrint;
     private CheckBox checkBoxRemember;
     public SharedPreferences mPrefs;
+    private String userID;
 
     public SharedPreferences.Editor editor;
 
@@ -228,6 +232,8 @@ public class LogIn<choice> extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful())
                         {
+                            //
+
                             Toast.makeText(LogIn.this, "Error Logging in", Toast.LENGTH_SHORT).show();
 
                         }
@@ -238,6 +244,7 @@ public class LogIn<choice> extends AppCompatActivity {
                             startActivity(intent);
                             Toast.makeText(LogIn.this, "Logged in", Toast.LENGTH_SHORT).show();
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                         }
                     }
                 });

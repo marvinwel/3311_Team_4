@@ -65,7 +65,7 @@ public class PasswordGenerator {
 
 
         //fill the allowed length from different chars now.
-        for(int i=builder.length();i < length;++i){
+        for(int i=builder.length(); i < length; ++i){
             builder.append(allowedChars.charAt(rn.nextInt(allowedChars.length())));
         }
 

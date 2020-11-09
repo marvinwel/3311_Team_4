@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +46,9 @@ public class Store_Password extends AppCompatActivity {
     DatabaseReference mDatabse;
     String AES = "AES";
     String outputString;
+    String CurrentUser;
     View overlay;
+    FirebaseAuth Auth;
 
 
 
@@ -83,6 +86,9 @@ public class Store_Password extends AppCompatActivity {
         passtext.setText(gen_pass);
 
 
+        CurrentUser = Auth.getInstance().getCurrentUser().getUid();
+
+
 
         //full screen
         overlay = findViewById(R.id.store_password);
@@ -117,13 +123,14 @@ public class Store_Password extends AppCompatActivity {
                 }
                 else
                 {
+
                     //get password text to string
                     String encrypt_pass = passtext.getText().toString();
 
                     SecretKey secretKey = null;
                     try {
                         outputString = encrypt(encrypt_pass,usrname.getText().toString());
-                        
+
                     }catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -132,7 +139,7 @@ public class Store_Password extends AppCompatActivity {
                     String store = "Domain: " + domain.getText().toString() + " \n" + "Username: " + usrname.getText().toString() + "\n" + "password: " + outputString;
 
                     //store password on database
-                    mDatabse.push().setValue(store);
+                    mDatabse.child("users").child(CurrentUser).push().setValue(store);
 
                     domain.setText("");
                     usrname.setText("");
@@ -200,11 +207,12 @@ public class Store_Password extends AppCompatActivity {
 
 
 
-        mDatabse.addChildEventListener(new ChildEventListener() {
+        mDatabse.child("users").child(CurrentUser).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
             {
                 String string = snapshot.getValue(String.class);
+                //String string = mDatabse.child("users").child(CurrentUser).getRef();
                 arrayList.add(string);
                 adapter.notifyDataSetChanged();
 
