@@ -153,6 +153,7 @@ public class Store_Password extends AppCompatActivity {
             }
         });
 
+
         //dialog pops up each time listview is clicked on
         lstview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -272,6 +273,8 @@ public class Store_Password extends AppCompatActivity {
         byte[] key = digest.digest();
         SecretKeySpec secretKeySpec = new SecretKeySpec(key,"AES");
         return secretKeySpec;
+
+        
 
     }
 

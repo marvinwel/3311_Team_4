@@ -21,7 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    Button logout_bttn,save_bttn,view_bttn;
+    Button logout_bttn,view_bttn;
+    TextView save_bttn;
     FirebaseAuth mAuth;
     TextView passwor_display, num_display;
     SeekBar seekBar;
@@ -41,7 +42,7 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
         num_display = findViewById(R.id.num_display);
         seekBar = findViewById(R.id.seekBar);
         gen_bttn = findViewById(R.id.Gen_button);
-        save_bttn = findViewById(R.id.save_bttn);
+        save_bttn = findViewById(R.id.save_password1);
         view_bttn = findViewById(R.id.view_bttn);
         copybttn = findViewById(R.id.cpybttn);
         check1 = findViewById(R.id.checkBox1);

@@ -383,6 +383,7 @@ public class LogIn<choice> extends AppCompatActivity {
                         {
                             editor = mPrefs.edit();
                             Boolean boolIsChecked = checkBoxRemember.isChecked();
+
                             //SharedPreferences.Editor editor = mPrefs.edit();
                             editor.putString("pref_name", email_in.getText().toString());
                             editor.putBoolean("pref_check", boolIsChecked);

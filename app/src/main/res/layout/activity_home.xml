@@ -77,6 +77,9 @@
         android:layout_width="250dp"
         android:layout_height="38dp"
         android:layout_marginBottom="12dp"
+        android:max="40"
+        android:min="0"
+        android:progress="0"
         app:layout_constraintBottom_toTopOf="@+id/checkBox1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -191,17 +194,6 @@
         app:layout_constraintTop_toBottomOf="@+id/Gen_button"
         app:layout_constraintVertical_bias="0.053" />
 
-    <Button
-        android:id="@+id/save_bttn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Save Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.748"
-        app:layout_constraintStart_toEndOf="@+id/view_bttn"
-        app:layout_constraintTop_toBottomOf="@+id/Gen_button" />
-
     <CheckBox
         android:id="@+id/checkBox5"
         android:layout_width="wrap_content"
@@ -298,5 +290,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.292" />
+
+    <ImageView
+        android:id="@+id/save_password"
+        android:layout_width="97dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="464dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.742"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/saveicon" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="556dp"
+        android:text="Save Password"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/save_password1"
+        android:layout_width="163dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="464dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
