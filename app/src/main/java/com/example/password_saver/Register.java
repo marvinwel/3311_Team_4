@@ -79,13 +79,32 @@ public class Register extends AppCompatActivity {
                             }
                             else
                             {
-                                Toast.makeText(Register.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Register.this, LogIn.class);
-                                intent.putExtra("USER_NAME",email_con.getText().toString());
-                                intent.putExtra("PASSWORD",password_con.getText().toString());
-                                intent.putExtra("value",true);
-                                startActivity(intent);
-                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
+                                //send email verification after signup
+                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            Toast.makeText(Register.this, "SignUp Successful, Please check your email for verification", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(Register.this, LogIn.class);
+                                            intent.putExtra("USER_NAME",email_con.getText().toString());
+                                            intent.putExtra("PASSWORD",password_con.getText().toString());
+                                            intent.putExtra("value",true);
+                                            startActivity(intent);
+                                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
+
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
+
+
+                                //here
                             }
                         }
                     });

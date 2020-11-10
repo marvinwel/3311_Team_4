@@ -123,6 +123,7 @@
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textColorLink="#FFFFFF"
+        android:buttonTint="@color/design_default_color_on_secondary"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="parent"

@@ -15,6 +15,10 @@ public class PasswordGenerator {
     {
 
 
+        if(specialCharacters && Characters)
+        {
+            specialCharacters = false;
+        }
 
         String upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialChars = character;

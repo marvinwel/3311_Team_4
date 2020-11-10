@@ -379,33 +379,45 @@ public class LogIn<choice> extends AppCompatActivity {
                     if (!task.isSuccessful()) {
                         Toast.makeText(LogIn.this, "Login Error, Please check Password or Email", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (checkBoxRemember.isChecked())
+
+                        if(mAuth.getCurrentUser().isEmailVerified())
                         {
-                            editor = mPrefs.edit();
-                            Boolean boolIsChecked = checkBoxRemember.isChecked();
+                            if (checkBoxRemember.isChecked())
+                            {
+                                editor = mPrefs.edit();
+                                Boolean boolIsChecked = checkBoxRemember.isChecked();
 
-                            //SharedPreferences.Editor editor = mPrefs.edit();
-                            editor.putString("pref_name", email_in.getText().toString());
-                            editor.putBoolean("pref_check", boolIsChecked);
-                            editor.apply();
-                        } else {
-                            mPrefs.edit().clear().apply();
+                                //SharedPreferences.Editor editor = mPrefs.edit();
+                                editor.putString("pref_name", email_in.getText().toString());
+                                editor.putBoolean("pref_check", boolIsChecked);
+                                editor.apply();
+                            } else {
+                                mPrefs.edit().clear().apply();
+                            }
+
+                            Intent intent = new Intent(LogIn.this, home.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+                            if (choice == 5) {
+                                opendialog(intent);
+
+                            }
+
+                            if (choice == 3) {
+                                Toast.makeText(LogIn.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(LogIn.this, "Please verify your email address:  "+mAuth.getCurrentUser().getEmail().toString(), Toast.LENGTH_SHORT).show();
                         }
 
-                        Intent intent = new Intent(LogIn.this, home.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 
-                        if (choice == 5) {
-                            opendialog(intent);
 
-                        }
-
-                        if (choice == 3) {
-                            Toast.makeText(LogIn.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        }
  /*                       if(choice == 1)
                         {
                             Toast.makeText(LogIn.this, "Logged In", Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -21,10 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    Button logout_bttn,view_bttn;
-    TextView save_bttn;
+    Button logout_bttn;
+    ImageView save_bttn,view_bttn;
     FirebaseAuth mAuth;
-    TextView passwor_display, num_display;
+    TextView passwor_display, num_display, namedisply;
     SeekBar seekBar;
     Button gen_bttn,copybttn;
     CheckBox check1, check2, check3, check4,check5, check6, check7, check8,check9, check10, check11, check12,check13, check14;
@@ -38,12 +39,13 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
 
         //bind objects to widgets
         logout_bttn = findViewById(R.id.logout_button);
+        namedisply = findViewById(R.id.textView6);
         passwor_display = findViewById(R.id.gen_pss_display);
         num_display = findViewById(R.id.num_display);
         seekBar = findViewById(R.id.seekBar);
         gen_bttn = findViewById(R.id.Gen_button);
-        save_bttn = findViewById(R.id.save_password1);
-        view_bttn = findViewById(R.id.view_bttn);
+        save_bttn = findViewById(R.id.save_password12);
+        view_bttn = findViewById(R.id.view_bttn12);
         copybttn = findViewById(R.id.cpybttn);
         check1 = findViewById(R.id.checkBox1);
         check2 = findViewById(R.id.checkBox2);
@@ -63,6 +65,7 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
         mAuth = FirebaseAuth.getInstance();
 
 
+        namedisply.setText("Welcome "+ mAuth.getCurrentUser().getEmail());
         //clipboard sevice
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
