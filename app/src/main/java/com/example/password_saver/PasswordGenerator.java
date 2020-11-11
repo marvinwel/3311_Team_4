@@ -27,8 +27,10 @@ public class PasswordGenerator {
         String characters = "!@#$%^&*()_-+=<>?/{}~|";
         String allowedChars = "";
 
+        
         Random rn = new Random();
         StringBuilder builder = new StringBuilder(length);
+        StringBuilder new_builder = new StringBuilder(length);
 
 
 
@@ -36,23 +38,27 @@ public class PasswordGenerator {
         {
             allowedChars += upperCaseChars;
             builder.append(upperCaseChars.charAt(rn.nextInt(upperCaseChars.length()-1)));
+
         }
 
         if(lowerCase  )
         {
             allowedChars += lowerCaseChars;
             builder.append(lowerCaseChars.charAt(rn.nextInt(lowerCaseChars.length()-1)));
+
         }
 
         if(numbers )
         {
             allowedChars += numberChars;
             builder.append(numberChars.charAt(rn.nextInt(numberChars.length()-1)));
+
         }
         if(Characters  )
         {
             allowedChars += characters;
             builder.append(characters.charAt(rn.nextInt(characters.length()-1)));
+
         }
 
         if(specialCharacters  )
@@ -64,7 +70,12 @@ public class PasswordGenerator {
             }
             else
                 builder.append(specialChars.charAt(rn.nextInt(specialChars.length()-1)));
+
+
+
+
         }
+
 
 
 
@@ -73,7 +84,12 @@ public class PasswordGenerator {
             builder.append(allowedChars.charAt(rn.nextInt(allowedChars.length())));
         }
 
-        return builder.toString();
+        //randomly choose new character again
+        for(int i=new_builder.length(); i < length; ++i){
+            new_builder.append(builder.charAt(rn.nextInt(builder.length())));
+        }
+
+        return new_builder.toString().substring(0,length);
     }
 
 

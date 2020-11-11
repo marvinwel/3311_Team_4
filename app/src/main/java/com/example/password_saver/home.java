@@ -65,7 +65,11 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
         mAuth = FirebaseAuth.getInstance();
 
 
-        namedisply.setText("Welcome "+ mAuth.getCurrentUser().getEmail());
+        //display user name at top of screen
+        String tmp = mAuth.getCurrentUser().getEmail();
+        String[] name = tmp.split("@");
+        namedisply.setText("Welcome "+ name[0]);
+
         //clipboard sevice
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
@@ -176,15 +180,9 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
                 length = CheckSeekBarLength();
 
 
-                //max characters
-                if(length == 999)
-                {
-                    //if seek bar is 0 display error message
-                    passwor_display.setText("");
-                    Toast.makeText(home.this, "Max Characters is 40", Toast.LENGTH_SHORT).show();
-                }
+
                 //error handling for seek bar
-                else if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
+                if(!check1.isChecked() && !check2.isChecked() && !check3.isChecked() && !check4.isChecked() && !check5.isChecked() && !check6.isChecked() && !check7.isChecked() && !check8.isChecked() && !check9.isChecked()
                         && !check10.isChecked() && !check11.isChecked() && !check12.isChecked() && !check13.isChecked() && !check14.isChecked())
                 {
                     //if nothing is checked display error message
@@ -405,10 +403,6 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
         if(seekBar.getProgress() < 1)
         {
             length = 0;
-        }
-        if(seekBar.getProgress() > 40)
-        {
-            length = 999;
         }
         else
             length = seekBar.getProgress();

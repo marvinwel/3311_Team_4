@@ -329,6 +329,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/copy_icon_background"
         android:textSize="16sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
