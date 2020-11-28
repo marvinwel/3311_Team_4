@@ -412,7 +412,7 @@ public class LogIn<choice> extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(LogIn.this, "Please verify your email address:  "+mAuth.getCurrentUser().getEmail().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogIn.this, "Please verify your email address:  "+mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -521,7 +521,7 @@ public class LogIn<choice> extends AppCompatActivity {
     //key to help encrypt usr password
     @RequiresApi(api = Build.VERSION_CODES.M)
     private SecretKey createKey() throws InvalidAlgorithmParameterException {
-        KeyGenerator keyGenerator = null;
+        KeyGenerator keyGenerator;
         try {
             keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
             keyGenerator.init(new KeyGenParameterSpec.Builder("Key", KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)

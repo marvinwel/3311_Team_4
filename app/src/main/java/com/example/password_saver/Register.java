@@ -270,7 +270,7 @@ public class Register extends AppCompatActivity {
        return true;
     }
 
-    public static final Pattern EMAIL_ADDRESS = Pattern.compile("[a-zA-A0-9]\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA_Z0-9][a-zA-Z0-9\\-]{0,25}]" + ")+");
+    public static final Pattern EMAIL_ADDRESS = Pattern.compile("[a-zA-Z0-9]\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA_Z0-9][a-zA-Z0-9\\-]{0,25}]" + ")+");
 
     public void hideKeyboard(View view)
     {

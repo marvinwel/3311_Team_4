@@ -13,7 +13,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_overlay" />
+        android:background="@color/black_overlay"
+        tools:ignore="MissingConstraints" />
 
 
     <CheckBox
@@ -212,7 +213,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="284dp"
-        android:text="@"
+        android:text="\@"
         android:buttonTint="@color/design_default_color_on_secondary"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

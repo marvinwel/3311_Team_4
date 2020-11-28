@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -49,11 +52,18 @@ public class Store_Password extends AppCompatActivity {
     String CurrentUser;
     View overlay;
     FirebaseAuth Auth;
-
+    String mkey;
+    int position1;
+    String decrypt_pass = null;
+    String usrname1 ;
+    String pssword1 ;
+    boolean edit = false;
+    String usrn, domainName, key;
 
 
     //Arraylist
     private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> arrayListkey = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -67,12 +77,15 @@ public class Store_Password extends AppCompatActivity {
         domain = findViewById(R.id.domain_name);
         usrname = findViewById(R.id.Text_username);
         passtext = findViewById(R.id.Password_text);
-        imgView = (ImageView) findViewById(R.id.show_password_img);
+        imgView = findViewById(R.id.show_password_img);
         bckbttn = findViewById(R.id.storepsswrd_back_bttn);
         addbttn = findViewById(R.id.addToList);
         lstview = findViewById(R.id.listview);
         mDatabse = FirebaseDatabase.getInstance().getReference();
         imgView.setTag(1);
+        //alertusrname = findViewById(R.id.alert_username);
+        //alertpassword = findViewById(R.id.alert_password);
+
 
         //display list on page
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -108,6 +121,8 @@ public class Store_Password extends AppCompatActivity {
 
 
 
+
+
         //if add button is pressed
         addbttn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,12 +150,15 @@ public class Store_Password extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+
                     //create string to be stored
                     String store = "Domain: " + domain.getText().toString() + " \n" + "Username: " + usrname.getText().toString() + "\n" + "password: " + outputString;
 
                     //store password on database
                     mDatabse.child("users").child(CurrentUser).push().setValue(store);
+                    //mkey = mDatabse.child("users").child(CurrentUser).orderByValue();
 
+                    //clear text fields after password is saved
                     domain.setText("");
                     usrname.setText("");
                     passtext.setText("");
@@ -157,15 +175,18 @@ public class Store_Password extends AppCompatActivity {
         //dialog pops up each time listview is clicked on
         lstview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
-                String decrypt_pass = null;
-                String[] key = null;
+
+                String[] key;
                 String[] temp;
+                String[] temp1;
+
 
                 //takes all words as a string
                 String word = adapterView.getItemAtPosition(position).toString();
                 temp = word.split("Username: ");
+                temp1 = temp[0].split(":");
                 key = temp[1].split("\n");
 
                 
@@ -173,6 +194,8 @@ public class Store_Password extends AppCompatActivity {
                 String[] wordarray = word.split("password: ");
 
                 String tmp = key[0];
+                usrn = tmp;
+                domainName = temp1[1];
 
                 try {
                     decrypt_pass = decrypt(wordarray[1],tmp);
@@ -181,6 +204,8 @@ public class Store_Password extends AppCompatActivity {
                 }
                 //show dialog box to show password
                 AlertDialog.Builder alert = new AlertDialog.Builder(Store_Password.this);
+
+
                 alert.setTitle("Info");
 
 
@@ -191,20 +216,54 @@ public class Store_Password extends AppCompatActivity {
                 //alert.setMessage(tmp);
                 //alert.setMessage(tmp.length());
 
+                alert.setCancelable(true);
 
-                alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
-                alert.create().show();
 
-                //Toast.makeText(Store_Password.this, position, Toast.LENGTH_SHORT).show();
+                alert.setNegativeButton("DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        //String key = mDatabse.child("users").child(CurrentUser).child().getKey();
+                        mDatabse.child("users").child(CurrentUser).child(arrayListkey.get(position)).removeValue();
+                        position1 = position;
+                        arrayList.remove(position);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                });
+                alert.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+
+
+                        showtext(position1);
+
+
+
+
+
+
+                    }
+                });
+                alert.show();
+
+
 
 
             }
+
+
         });
+
 
 
 
@@ -213,7 +272,14 @@ public class Store_Password extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
             {
                 String string = snapshot.getValue(String.class);
-                //String string = mDatabse.child("users").child(CurrentUser).getRef();
+
+                //split string up
+
+                mkey = snapshot.getKey();
+                arrayListkey.add(mkey);
+
+                //hide password
+
                 arrayList.add(string);
                 adapter.notifyDataSetChanged();
 
@@ -222,15 +288,25 @@ public class Store_Password extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+                Toast.makeText(Store_Password.this, "Update completed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
+                //Post removedPost = snapshot.getValue(Post.class);
+                //listview.remove(listview.getItem(position).toString());
+                //arrayList.remove(1);
+                //mDatabse.removeValue();
+
+                arrayListkey.remove(position1);
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
 
             }
 
@@ -262,6 +338,113 @@ public class Store_Password extends AppCompatActivity {
 
 
     }
+
+
+
+
+    public void showtext(int position4)
+    {
+        final AlertDialog.Builder alert1 = new AlertDialog.Builder(Store_Password.this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.layout_dialog,null);
+        alert1.setView(view);
+
+        final EditText alertusrname = view.findViewById(R.id.alert_username);
+        final EditText alertpassword = view.findViewById(R.id.alert_password);
+
+
+        alert1.setTitle("EDIT");
+        alert1.setMessage("Domain: "+domainName);
+
+        alert1.setCancelable(true);
+
+
+
+        alertusrname.setText(usrn);
+        alertpassword.setText(decrypt_pass);
+
+
+
+
+
+
+
+        key = mDatabse.child("users").child(CurrentUser).child(arrayListkey.get(position1)).toString();
+
+        alert1.setPositiveButton("APPLY", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //final EditText alertusrname = view.findViewById(R.id.alert_username);
+                //final EditText alertpassword = view.findViewById(R.id.alert_password);
+                String outputString = null;
+
+                //String key = mDatabse.child("users").child(CurrentUser).child(arrayListkey.get(i)).toString();
+
+                String name = alertusrname.getText().toString();
+                String pass = alertpassword.getText().toString();
+
+
+
+
+                SecretKey secretKey = null;
+                try {
+                    outputString = encrypt(pass,name);
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                //create string to be stored
+                String store = "Domain: " + domainName + " \n" + "Username: " + alertusrname.getText().toString() + "\n" + "password: " + outputString;
+
+
+
+
+
+
+                HashMap hashMap = new HashMap();
+                String [] tempp = key.split("/-");
+                hashMap.put("-"+tempp[1],store);
+
+
+                //mDatabse.child("users").child(CurrentUser).updateChildren(hashMap);
+
+                mDatabse.child("users").child(CurrentUser).updateChildren(hashMap);
+
+
+
+
+
+            }
+        });
+        alert1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                dialogInterface.cancel();
+
+
+
+
+
+            }
+        });
+        alert1.show();
+
+    }
+
+
+
+
+
+
+
+
+
+
 
     //function to generate key to help encrypt and decrypt password
     private static SecretKeySpec generatekey(String password) throws Exception
@@ -304,6 +487,7 @@ public class Store_Password extends AppCompatActivity {
 
     public boolean CheckIfFieldsBlank()
     {
+
         boolean result = false;
 
         if(domain.getText().toString().isEmpty())
@@ -328,5 +512,9 @@ public class Store_Password extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
+
+
+
+
 
 }

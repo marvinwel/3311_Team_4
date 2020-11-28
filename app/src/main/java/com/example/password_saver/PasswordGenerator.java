@@ -21,7 +21,7 @@ public class PasswordGenerator {
         }
 
         String upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String specialChars = character;
+        //String specialChars = character;
         String lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
         String numberChars = "0123456789";
         String characters = "!@#$%^&*()_-+=<>?/{}~|";
@@ -63,13 +63,13 @@ public class PasswordGenerator {
 
         if(specialCharacters  )
         {
-            allowedChars += specialChars;
-            if(specialChars.length() < 2)
+            allowedChars += character;
+            if(character.length() < 2)
             {
-                builder.append(specialChars.charAt(rn.nextInt(specialChars.length())));
+                builder.append(character.charAt(rn.nextInt(character.length())));
             }
             else
-                builder.append(specialChars.charAt(rn.nextInt(specialChars.length()-1)));
+                builder.append(character.charAt(rn.nextInt(character.length()-1)));
 
 
 

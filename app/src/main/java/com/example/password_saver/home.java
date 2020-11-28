@@ -112,7 +112,7 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
             @Override
             public void onClick(View view)
             {
-                if(passwor_display.getText().toString() == "")
+                if(passwor_display.getText().toString().equals(""))
                 {
                     Toast.makeText(home.this, "Please generate a password before saving", Toast.LENGTH_SHORT).show();
                 }
@@ -228,43 +228,43 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
 
         if(check5.isChecked())
         {
-            result.append(check5.getText().toString()+"!!!");
+            result.append(check5.getText().toString()).append("!");
         }
         if(check6.isChecked())
         {
-            result.append(check6.getText().toString()+"@@@");
+            result.append(check6.getText().toString()).append("@");
         }
         if(check7.isChecked())
         {
-            result.append(check7.getText().toString()+"###");
+            result.append(check7.getText().toString()).append("#");
         }
         if(check8.isChecked())
         {
-            result.append(check8.getText().toString()+"$$$");
+            result.append(check8.getText().toString()).append("$");
         }
         if(check9.isChecked())
         {
-            result.append(check9.getText().toString()+"%%%");
+            result.append(check9.getText().toString()).append("%");
         }
         if(check10.isChecked())
         {
-            result.append(check10.getText().toString()+"&&&");
+            result.append(check10.getText().toString()).append("&");
         }
         if(check11.isChecked())
         {
-            result.append(check11.getText().toString()+"***");
+            result.append(check11.getText().toString()).append("*");
         }
         if(check12.isChecked())
         {
-            result.append(check12.getText().toString()+"___");
+            result.append(check12.getText().toString()).append("_");
         }
         if(check13.isChecked())
         {
-            result.append(check13.getText().toString()+"---");
+            result.append(check13.getText().toString()).append("-");
         }
         if(check14.isChecked())
         {
-            result.append(check14.getText().toString()+"~~~");
+            result.append(check14.getText().toString()).append("~");
         }
 
         characters = result.toString();
@@ -401,9 +401,7 @@ public class home extends AppCompatActivity implements PopupMenu.OnMenuItemClick
 
 
         if(seekBar.getProgress() < 1)
-        {
-            length = 0;
-        }
+            return length;
         else
             length = seekBar.getProgress();
 
