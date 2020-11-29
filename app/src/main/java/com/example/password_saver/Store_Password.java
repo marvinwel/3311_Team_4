@@ -177,6 +177,7 @@ public class Store_Password extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
+                position1 = position;
 
                 String[] key;
                 String[] temp;
@@ -232,7 +233,7 @@ public class Store_Password extends AppCompatActivity {
 
                         //String key = mDatabse.child("users").child(CurrentUser).child().getKey();
                         mDatabse.child("users").child(CurrentUser).child(arrayListkey.get(position)).removeValue();
-                        position1 = position;
+
                         arrayList.remove(position);
                         adapter.notifyDataSetChanged();
 
@@ -368,6 +369,7 @@ public class Store_Password extends AppCompatActivity {
 
 
 
+        position1=position4;
 
 
         key = mDatabse.child("users").child(CurrentUser).child(arrayListkey.get(position1)).toString();
@@ -398,7 +400,10 @@ public class Store_Password extends AppCompatActivity {
 
 
                 //create string to be stored
-                String store = "Domain: " + domainName + " \n" + "Username: " + alertusrname.getText().toString() + "\n" + "password: " + outputString;
+                String store = "Domain: " + domainName  + "Username: " + alertusrname.getText().toString() + "\n" + "password: " + outputString;
+
+                arrayList.set(position1,store);
+                adapter.notifyDataSetChanged();
 
 
 
